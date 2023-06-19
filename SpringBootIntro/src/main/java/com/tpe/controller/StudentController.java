@@ -3,6 +3,9 @@ package com.tpe.controller;
 import com.tpe.domain.Student;
 import com.tpe.dto.StudentDTO;
 import com.tpe.service.StudentService;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
@@ -13,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +27,7 @@ import java.util.Map;
 @RequestMapping("/students")//http://localhost:8080/students
 public class StudentController {
 
+Logger logger=LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
     private StudentService studentService;
@@ -189,10 +194,21 @@ return ResponseEntity.ok(studentlist);
     public ResponseEntity<StudentDTO>getStudentDtoById(@PathVariable("id") Long id){
 
         StudentDTO studentDTO=studentService.getStudentDtoById(id);
+
+        logger.warn("-----------------Servisten StudentDTO Objesi alındı: "+studentDTO.getName());
+
         return ResponseEntity.ok(studentDTO);
 
     }
 
+    @GetMapping("/welcome")
+
+    public String welcome(HttpServletRequest request){
+
+        logger.info("welcome mesajı  {}",request.getServletPath());
+
+        return "WELCOME :)";
+    }
 
 
 
