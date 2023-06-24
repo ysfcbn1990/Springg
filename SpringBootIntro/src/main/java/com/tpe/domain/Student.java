@@ -50,6 +50,9 @@ public class Student {
     @OneToMany(mappedBy = "student")
     private List<Book> book=new ArrayList<>();
 
+    @OneToOne
+    private User user;
+
         //getter-setter
         //parametreli/siz const
 
